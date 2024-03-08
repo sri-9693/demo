@@ -1,3 +1,4 @@
 FROM node
 RUN npm install express
-ENTRYPOINT [ "node app.js" ]
+COPY app.js /opt
+ENTRYPOINT [ "node /opt/app.js" ]
