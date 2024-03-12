@@ -45,7 +45,7 @@ pipeline{
                         encoding: 'UTF-8', 
                         label: 'Start Container', 
                         returnStatus: true,
-                        script: "docker run -itd -p ${NG_PORT}:3000 demo:${BRANCH_NAME}-${BUILD_ID} --name ${CONTAINER_PREFIX}-${BRANCH_NAME}"
+                        script: "docker run -itd -p ${NG_PORT}:3000 --name ${CONTAINER_PREFIX}-${BRANCH_NAME} demo:${BRANCH_NAME}-${BUILD_ID}"
                     )
 
                     if (containerStartStatus >= 1) {
