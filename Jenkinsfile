@@ -33,31 +33,26 @@ pipeline{
                         env.NG_PORT=8082
                     }
 
-                    def containerStartStatus=0
+                    try {
+                        sh (
+                            encoding: 'UTF-8', 
+                            label: 'Delete old Container', 
+                            script: "docker rm -f ${CONTAINER_PREFIX}-${BRANCH_NAME}"
+                        )
 
-                    sh (
-                        encoding: 'UTF-8', 
-                        label: 'Delete old Container', 
-                        script: "docker rm -f ${CONTAINER_PREFIX}-${BRANCH_NAME}"
-                    )
+                        sh (
+                            encoding: 'UTF-8', 
+                            label: 'Start Container', 
+                            script: "docker run -itd -p ${NG_PORT}:3000 --name ${CONTAINER_PREFIX}-${BRANCH_NAME} demo:${BRANCH_NAME}-${BUILD_ID}"
+                        )
 
-                    containerStartStatus = sh (
-                        encoding: 'UTF-8', 
-                        label: 'Start Container', 
-                        returnStatus: true,
-                        script: "docker run -itd -p ${NG_PORT}:3000 --name ${CONTAINER_PREFIX}-${BRANCH_NAME} demo:${BRANCH_NAME}-${BUILD_ID}"
-                    )
-
-                    if (containerStartStatus >= 1) {
                         echo "DOCKER CONTAINER NOT STARTED"
-                    } else {
-                        echo "DOCKER CONTAINER STARTED"
+                    } catch (Exception err) {
+                        echo "DOCKER CONTAINER NOT STARTED - $err"
+                        sh 'false'
                     }
                 }
             }
         }
-
     }
-
-
 }
