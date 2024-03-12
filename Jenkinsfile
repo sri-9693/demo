@@ -3,6 +3,10 @@ pipeline{
         label 'sv'
     }
 
+    environment {
+        CONTAINER_PREFIX = "node"
+    }
+
     options {
         disableConcurrentBuilds()
     }
@@ -31,11 +35,17 @@ pipeline{
 
                     def containerStartStatus=0
 
+                    sh (
+                        encoding: 'UTF-8', 
+                        label: 'Delete old Container', 
+                        script: "docker rm -f ${CONTAINER_PREFIX}-${BRANCH_NAME}"
+                    )
+
                     containerStartStatus = sh (
                         encoding: 'UTF-8', 
                         label: 'Start Container', 
                         returnStatus: true,
-                        script: "docker run -itd -p ${NG_PORT}:3000 demo:${BRANCH_NAME}-${BUILD_ID}"
+                        script: "docker run -itd -p ${NG_PORT}:3000 demo:${BRANCH_NAME}-${BUILD_ID} --name ${CONTAINER_PREFIX}-${BRANCH_NAME}"
                     )
 
                     if (containerStartStatus >= 1) {
