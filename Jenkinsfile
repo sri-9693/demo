@@ -14,7 +14,7 @@ pipeline{
                     sh (
                         encoding: 'UTF-8', 
                         label: 'Docker Image Build', 
-                        script: 'docker build -t demo:latest .'
+                        script: "docker build -t demo:${BRANCH_NAME}-${BUILD_ID} ."
                     )
                 }
             }
