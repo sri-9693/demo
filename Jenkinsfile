@@ -9,6 +9,11 @@ pipeline{
 
     options {
         disableConcurrentBuilds()
+        quietPeriod 0
+    }
+
+    triggers {
+        githubPush()
     }
 
     stages {

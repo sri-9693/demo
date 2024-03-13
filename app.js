@@ -9,7 +9,9 @@ const port = 3000;
 let data = [
     { id: 1, name: 'John Doe', age: 30 },
     { id: 2, name: 'Jane Smith', age: 25 },
-    { id: 3, name: 'Ramsay Baba', age: 45 }
+    { id: 3, name: 'Bala Chilla', age: 45 },
+    { id: 4, name: 'Phani Kumar', age: 35 },
+    { id: 5, name: 'Sri', age: 85 }
 ];
 
 // Middleware to parse JSON request bodies
