@@ -11,6 +11,10 @@ pipeline{
         disableConcurrentBuilds()
     }
 
+    triggers {
+        githubPush()
+    }
+
     stages {
         stage('Init') {
             steps {
