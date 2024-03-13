@@ -36,6 +36,8 @@ pipeline{
                         env.NG_PORT=8081
                     } else if (BRANCH_NAME.equals("test")){
                         env.NG_PORT=8082
+                    } else if (BRANCH_NAME.equals("prod")){
+                        env.NG_PORT=8083
                     }
 
                     try {
